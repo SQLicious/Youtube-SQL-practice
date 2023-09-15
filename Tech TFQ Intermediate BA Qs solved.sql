@@ -1,3 +1,7 @@
+# Date created and Last ran : 09-15-2023 
+# AUTHOR: Ruby Gunna 
+# Database: MySQL Wokbench 8.0
+    
 CREATE DATABASE YOUTUBE_PRACTICE;
 USE YOUTUBE_PRACTICE;
 
