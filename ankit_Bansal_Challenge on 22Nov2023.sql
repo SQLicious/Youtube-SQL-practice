@@ -39,40 +39,27 @@ INSERT INTO sales (order_date, customer, qty) VALUES ('2021-04-01', 'C5', '15');
 INSERT INTO sales (order_date, customer, qty) VALUES ('2021-04-01', 'C6', '10');
 SELECT * FROM sales;
 
-/* Query to Solve Problem 1*/
-/* Easy and lazy approach which assumes each flight in the table will have only one interim stop before the final destination*/
-WITH RankedFlights AS (
-    SELECT
-        cid,
-        origin,
-        Destination,
-        DENSE_RANK() OVER (PARTITION BY cid ORDER BY fid) AS rnk
-    FROM flights
-)
-SELECT
-    cid,
-    origin,
-    Destination
-FROM RankedFlights
-WHERE rnk = 2;
-
 /* Problem 1 - Comprehensive approach which accounts for multiple stop flights */
-WITH RankedFlights AS (
+/* The CTE uses the LEAD function to get the next destination for each row within the same cid partition.
+ The SELECT statement selects rows where the destination is not NULL, effectively filtering out rows where the destination is the last one for a specific cid. */
+ 
+WITH cte AS (
     SELECT
         cid,
         origin,
-        Destination,
-        DENSE_RANK() OVER (PARTITION BY cid ORDER BY fid) AS rnk
+        LEAD(Destination) OVER (PARTITION BY cid ORDER BY fid) AS destination
     FROM flights
 )
 SELECT
     cid,
     origin,
-    Destination
-FROM RankedFlights
-WHERE rnk = (SELECT MAX(rnk) FROM RankedFlights AS RF2 WHERE RF2.cid = RankedFlights.cid);
+    destination
+FROM
+    cte
+WHERE
+    destination IS NOT NULL;
 
-/* Problem 2- Find the Count of new customers */
+/* Problem 2 - Find the Count of new customers */
 SELECT
     DATE_FORMAT(order_date, '%b-%y') AS Month,
     COUNT(DISTINCT customer) AS new_customers
