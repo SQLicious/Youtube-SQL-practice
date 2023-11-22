@@ -1,5 +1,5 @@
 # Date created and Last ran : 11-22-2023 
-# Queries written in MySQL Workbench 8.0 to solve the Interview question posted by Ankit Bansal on Linkedin 11/22/2023
+# Queries written in MySQL Workbench 8.0 to solve the tricky Interview questions posted by Ankit Bansal on Linkedin 11/22/2023
 
 CREATE DATABASE Ankit_challenges;
 USE Ankit_challenges;
