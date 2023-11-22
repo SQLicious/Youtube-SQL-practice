@@ -92,7 +92,6 @@ WHERE
             -- Check if the order date of the previous purchase is before the current order date
             AND s2.order_date < s1.order_date
     )
--- Group the results by year and month
 GROUP BY order_date;
    
 
